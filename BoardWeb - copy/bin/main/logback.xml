@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} %-5level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="file_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/app/log/ssp_api.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/app/log/ssp_api.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{HH:mm:ss.SSS} {%thread} %-5level %logger{32} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- <logger name="org.springframework" level="debug"/> <logger name="org.apache.http.wire" level="error" /> <logger name="org.apache.http.client" level="error" /> -->
+
+    <logger name="org.springframework" level="info" />
+    <logger name="org.mybatis.spring" level="info" />
+
+    <logger name="jdbc"                level="OFF" />
+    <logger name="jdbc.sqlonly"        level="INFO" />  <!-- 파라미터를 셋팅해서 출력-->
+    <logger name="jdbc.resultsettable" level="INFO" />  <!-- 결과값을 보여줌-->
+    <logger name="jdbc.sqltiming"      level="INFO" />
+    <logger name="log4jdbc.debug"      level="INFO" />
+    
+    <root level="debug">
+        <appender-ref ref="console" />
+        <appender-ref ref="file_log" />
+    </root>
+</configuration>
